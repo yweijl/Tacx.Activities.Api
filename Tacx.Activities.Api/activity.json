@@ -1,0 +1,8 @@
+{
+  "id": "1",
+  "name": "Cycling",
+  "description": "Get some wattage in those paddles",
+  "distance": 80.0,
+  "duration": 300.0,
+  "avgSpeed": 39.0
+}
