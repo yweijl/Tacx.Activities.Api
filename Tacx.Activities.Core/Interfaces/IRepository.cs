@@ -7,5 +7,6 @@ namespace Tacx.Activities.Core.Interfaces
     {
         Task<bool> CreateAsync(TEntity activity);
         Task<TEntity?> GetByIdAsync(string id);
+        Task<bool> DeleteAsync(string requestId);
     }
 }

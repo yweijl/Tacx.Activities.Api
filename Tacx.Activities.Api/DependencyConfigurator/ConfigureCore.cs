@@ -14,6 +14,7 @@ namespace Tacx.Activities.Api.DependencyConfigurator
         {
             services.AddScoped<IRequestHandler<CreateActivityCommand, ActivityDto>, CreateActivityCommandHandler>();
             services.AddScoped<IRequestHandler<GetActivityQuery, ActivityDto?>, GetActivityQueryHandler>();
+            services.AddScoped<IRequestHandler<DeleteActivityCommand, bool>, DeleteActivityCommandHandler>();
             return services;
         }
     }

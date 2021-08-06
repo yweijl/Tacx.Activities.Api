@@ -39,14 +39,27 @@ namespace Tacx.Activities.Infrastructure.CosmosDb
             try
             {
                 await _container.CreateItemAsync(entity, new PartitionKey(entity.Id));
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 return false;
             }
+        }
 
-            return true;
+        public async Task<bool> DeleteAsync(string id)
+        {
+            try
+            { 
+                await _container.DeleteItemAsync<TEntity>(id, new PartitionKey(id));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }

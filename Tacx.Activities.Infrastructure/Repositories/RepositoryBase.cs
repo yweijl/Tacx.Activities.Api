@@ -23,5 +23,10 @@ namespace Tacx.Activities.Infrastructure.Repositories
         {
             return _container.ReadItemAsync(id);
         }
+
+        public Task<bool> DeleteAsync(string id)
+        {
+            return _container.DeleteAsync(id);
+        }
     }
 }

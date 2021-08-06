@@ -52,15 +52,18 @@ namespace Tacx.Activities.Api.Controllers
         public async Task<IActionResult> GetActivityById(int id)
         {
             var activity = await _mediator.Send(new GetActivityQuery(id.ToString()));
-            return activity == null
-                ? BadRequest("Activity could not be found")
-                : Ok(activity);
+            return activity != null
+                ? Ok(activity)
+                : BadRequest("Activity could not be found");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivity(int id)
         {
-            throw new NotImplementedException();
+            var isDeleted = await _mediator.Send(new DeleteActivityCommand(id.ToString()));
+            return isDeleted
+                ? Ok()
+                : BadRequest("Activity not deleted. Something went wrong");
         }
     }
 }
