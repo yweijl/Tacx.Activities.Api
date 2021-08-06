@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Dtos.Extensions;
+using Tacx.Activities.Core.Queries;
 
 namespace Tacx.Activities.Api.Controllers
 {
@@ -50,7 +51,10 @@ namespace Tacx.Activities.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivityById(int id)
         {
-            throw new NotImplementedException();
+            var activity = await _mediator.Send(new GetActivityQuery(id.ToString()));
+            return activity == null
+                ? BadRequest("Activity could not be found")
+                : Ok(activity);
         }
 
         [HttpDelete("{id}")]
