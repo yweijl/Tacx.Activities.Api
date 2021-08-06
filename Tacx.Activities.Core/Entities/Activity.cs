@@ -1,11 +1,7 @@
-﻿using Newtonsoft.Json;
-
-namespace Tacx.Activities.Core.Entities
+﻿namespace Tacx.Activities.Core.Entities
 {
-    public class Activity
+    public class Activity : EntityBase
     {
-        [JsonProperty("id")] 
-        public string Id { get; set; } = default!;
         public string Name { get; set; } = default!;
         public string? Description { get; set; }
         public double Distance { get; set; }

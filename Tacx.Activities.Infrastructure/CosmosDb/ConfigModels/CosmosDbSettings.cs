@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Tacx.Activities.Infrastructure.CosmosDb
+namespace Tacx.Activities.Infrastructure.CosmosDb.ConfigModels
 {
     public class CosmosDbSettings
     {

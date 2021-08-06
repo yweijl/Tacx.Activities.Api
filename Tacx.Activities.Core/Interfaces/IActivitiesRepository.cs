@@ -5,7 +5,7 @@ namespace Tacx.Activities.Core.Interfaces
 {
     public interface IActivitiesRepository
     {
-        Task<bool> InsertAsync(Activity activity);
-        Task<Activity?> GetByIdAsync(long id);
+        Task<bool> CreateAsync(Activity activity);
+        Task<Activity?> GetByIdAsync(string id);
     }
 }

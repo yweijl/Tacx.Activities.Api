@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tacx.Activities.Api.DependencyConfigurator;
 using Tacx.Activities.Infrastructure.CosmosDb;
+using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 
 namespace Tacx.Activities.Api
 {

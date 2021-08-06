@@ -1,7 +1,7 @@
 {
   "id": "1",
   "name": "Cycling",
-  "description": "Get some wattage in those paddles",
+  "description": "put the pedal to the metal",
   "distance": 80.0,
   "duration": 300.0,
   "avgSpeed": 39.0

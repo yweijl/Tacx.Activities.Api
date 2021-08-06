@@ -2,18 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tacx.Activities.Core.Enums;
+using Tacx.Activities.Core.Entities;
+using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 
 namespace Tacx.Activities.Infrastructure.CosmosDb
 {
-    public class CosmosDbContainerFactory : ICosmosDbContainerFactory
+    public class CosmosDbClient : ICosmosDbClient
     {
         private readonly CosmosClient _cosmosClient;
         private readonly string _databaseName;
         private readonly List<ContainerInfo> _containers;
 
-        public CosmosDbContainerFactory(CosmosClient cosmosClient,
+        public CosmosDbClient(CosmosClient cosmosClient,
             string databaseName,
             List<ContainerInfo> containers)
         {
@@ -22,14 +23,16 @@ namespace Tacx.Activities.Infrastructure.CosmosDb
             _cosmosClient = cosmosClient;
         }
 
-        public ICosmosDbContainer GetContainer(CosmosDbContainerType containerType)
+        public Container GetContainer<TEntity>() where TEntity : EntityBase, new()
         {
-            if (_containers.Where(x => x.Name == containerType.ToString()) == null)
+            var containerName = typeof(TEntity).Name;
+
+            if (_containers.All(x => x.Name != containerName))
             {
-                throw new ArgumentException($"Unable to find container: {containerType}");
+                throw new ArgumentException($"Unable to find container: {containerName}");
             }
 
-            return new CosmosDbContainer(_cosmosClient, _databaseName, containerType);
+            return _cosmosClient.GetContainer(_databaseName, containerName);
         }
     }
 }

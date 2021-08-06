@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Enums\" />
     <Folder Include="Queries\" />
     <Folder Include="QueryHandlers\" />
   </ItemGroup>

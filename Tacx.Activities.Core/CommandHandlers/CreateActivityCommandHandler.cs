@@ -23,7 +23,7 @@ namespace Tacx.Activities.Core.CommandHandlers
         {
             var activity = ToEntity(request.Activity);
 
-            await _activitiesRepository.InsertAsync(activity);
+            await _activitiesRepository.CreateAsync(activity);
             await _storageService.PersistActivityAsync(activity);
 
             return request.Activity;

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Tacx.Activities.Core.Entities;
 using Tacx.Activities.Core.Interfaces;
 using Tacx.Activities.Core.Services;
 using Tacx.Activities.Infrastructure.CosmosDb;
+using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 using Tacx.Activities.Infrastructure.Repository;
 
@@ -20,11 +22,13 @@ namespace Tacx.Activities.Api.DependencyConfigurator
                 .GetAwaiter()
                 .GetResult();
 
-            services.AddSingleton<ICosmosDbContainerFactory>(cosmosDbClientFactory);
+            services.AddSingleton<ICosmosDbClient>(cosmosDbClientFactory);
+
+            services.AddScoped<ICosmosDbContainer<Activity>, CosmosDbContainer<Activity>>();
             return services;
         }
 
-        private static async Task<CosmosDbContainerFactory> ConfigureCosmosDbAsync(CosmosDbSettings cosmosDbSettings)
+        private static async Task<CosmosDbClient> ConfigureCosmosDbAsync(CosmosDbSettings cosmosDbSettings)
         {
             var client = new CosmosClient(cosmosDbSettings.EndpointUrl, cosmosDbSettings.PrimaryKey);
             await client.CreateDatabaseIfNotExistsAsync(cosmosDbSettings.DatabaseName);
@@ -40,7 +44,7 @@ namespace Tacx.Activities.Api.DependencyConfigurator
                     .CreateIfNotExistsAsync();
             }
 
-            return new CosmosDbContainerFactory(client, cosmosDbSettings.DatabaseName, cosmosDbSettings.Containers);
+            return new CosmosDbClient(client, cosmosDbSettings.DatabaseName, cosmosDbSettings.Containers);
         }
     }
 }
