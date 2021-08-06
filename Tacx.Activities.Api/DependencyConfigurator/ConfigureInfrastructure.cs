@@ -18,32 +18,17 @@ namespace Tacx.Activities.Api.DependencyConfigurator
             services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
             services.AddScoped<IStorageService, FilesStorageService>();
 
-            var cosmosDbClientFactory = ConfigureCosmosDbAsync(cosmosDbSettings)
-                .GetAwaiter()
-                .GetResult();
+            var cosmosDbClient = GetCosmosDbClient(cosmosDbSettings);
 
-            services.AddSingleton<ICosmosDbClient>(cosmosDbClientFactory);
+            services.AddSingleton<ICosmosDbClient>(cosmosDbClient);
 
             services.AddScoped<ICosmosDbContainer<Activity>, CosmosDbContainer<Activity>>();
             return services;
         }
 
-        private static async Task<CosmosDbClient> ConfigureCosmosDbAsync(CosmosDbSettings cosmosDbSettings)
+        private static CosmosDbClient GetCosmosDbClient(CosmosDbSettings cosmosDbSettings)
         {
             var client = new CosmosClient(cosmosDbSettings.EndpointUrl, cosmosDbSettings.PrimaryKey);
-            await client.CreateDatabaseIfNotExistsAsync(cosmosDbSettings.DatabaseName);
-            var database = client.GetDatabase(cosmosDbSettings.DatabaseName)!;
-
-            foreach (var container in cosmosDbSettings.Containers)
-            {
-                await database.DefineContainer(container.Name, container.PartitionKey)
-                    .WithIndexingPolicy()
-                    .WithAutomaticIndexing(true)
-                    .WithIndexingMode(IndexingMode.Consistent)
-                    .Attach()
-                    .CreateIfNotExistsAsync();
-            }
-
             return new CosmosDbClient(client, cosmosDbSettings.DatabaseName, cosmosDbSettings.Containers);
         }
     }

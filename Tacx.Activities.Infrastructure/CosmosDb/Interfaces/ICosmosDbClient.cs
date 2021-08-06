@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos;
 using Tacx.Activities.Core.Entities;
 
 namespace Tacx.Activities.Infrastructure.CosmosDb.Interfaces
@@ -6,5 +7,6 @@ namespace Tacx.Activities.Infrastructure.CosmosDb.Interfaces
     public interface ICosmosDbClient
     {
         Container GetContainer<TEntity>() where TEntity : EntityBase, new();
+        Task CreateIfNotExistsAsync();
     }
 }
