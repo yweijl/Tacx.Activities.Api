@@ -7,7 +7,7 @@ using Tacx.Activities.Core.Services;
 using Tacx.Activities.Infrastructure.CosmosDb;
 using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
-using Tacx.Activities.Infrastructure.Repository;
+using Tacx.Activities.Infrastructure.Repositories;
 
 namespace Tacx.Activities.Api.DependencyConfigurator
 {
@@ -15,7 +15,7 @@ namespace Tacx.Activities.Api.DependencyConfigurator
     {
         public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, CosmosDbSettings cosmosDbSettings)
         {
-            services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
+            services.AddScoped<IRepository<Activity>, ActivitiesRepository>();
             services.AddScoped<IStorageService, FilesStorageService>();
 
             var cosmosDbClient = GetCosmosDbClient(cosmosDbSettings);

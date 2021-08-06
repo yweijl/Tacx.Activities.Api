@@ -10,21 +10,18 @@ namespace Tacx.Activities.Core.CommandHandlers
 {
     public class CreateActivityCommandHandler : IRequestHandler<CreateActivityCommand, ActivityDto>
     {
-        private readonly IStorageService _storageService;
-        private readonly IActivitiesRepository _activitiesRepository;
+        private readonly IRepository<Activity> _repository;
 
-        public CreateActivityCommandHandler(IActivitiesRepository activitiesRepository, IStorageService storageService)
+        public CreateActivityCommandHandler(IRepository<Activity> repository)
         {
-            _activitiesRepository = activitiesRepository;
-            _storageService = storageService;
+            _repository = repository;
         }
 
         public async Task<ActivityDto> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
             var activity = ToEntity(request.Activity);
 
-            await _activitiesRepository.CreateAsync(activity);
-            await _storageService.PersistActivityAsync(activity);
+            await _repository.CreateAsync(activity);
 
             return request.Activity;
         }
