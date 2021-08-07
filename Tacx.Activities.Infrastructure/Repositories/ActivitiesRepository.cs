@@ -15,7 +15,7 @@ namespace Tacx.Activities.Infrastructure.Repositories
 
         public override async Task<bool> CreateAsync(Activity activity)
         {
-            await _storageService.PersistActivityAsync(activity);
+            //await _storageService.PersistActivityAsync(activity);
             return await base.CreateAsync(activity);
         }
     }

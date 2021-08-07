@@ -4,6 +4,7 @@ using MediatR;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Entities;
 using Tacx.Activities.Core.Interfaces;
+using Tacx.Activities.Core.Mappers;
 using Tacx.Activities.Core.Queries;
 
 namespace Tacx.Activities.Core.QueryHandlers
@@ -21,20 +22,7 @@ namespace Tacx.Activities.Core.QueryHandlers
         {
             var activity = await _repository.GetByIdAsync(request.Id);
             
-            return activity == null 
-                ? null : 
-                ToDto(activity);
+            return activity?.ToDto();
         }
-
-        private static ActivityDto ToDto(Activity activity)
-            => new()
-            {
-                Id = activity.Id,
-                Name = activity.Name,
-                Description = activity.Description,
-                Duration = activity.Duration,
-                Distance = activity.Distance,
-                AvgSpeed = activity.AvgSpeed,
-            };
     }
 }

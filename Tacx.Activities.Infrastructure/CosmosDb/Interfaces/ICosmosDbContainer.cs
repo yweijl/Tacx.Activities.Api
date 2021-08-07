@@ -8,5 +8,6 @@ namespace Tacx.Activities.Infrastructure.CosmosDb.Interfaces
         public Task<TEntity?> ReadItemAsync(string id);
         public Task<bool> CreateAsync(TEntity entity);
         public Task<bool> DeleteAsync(string id);
+        Task<bool> UpsertAsync(TEntity entity);
     }
 }

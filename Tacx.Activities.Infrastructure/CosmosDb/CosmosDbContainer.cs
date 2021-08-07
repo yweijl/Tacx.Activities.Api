@@ -61,5 +61,19 @@ namespace Tacx.Activities.Infrastructure.CosmosDb
                 return false;
             }
         }
+
+        public async Task<bool> UpsertAsync(TEntity entity)
+        {
+            try
+            {
+                await _container.UpsertItemAsync(entity, new PartitionKey(entity.Id));
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+        }
     }
 }

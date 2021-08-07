@@ -21,7 +21,6 @@ namespace Tacx.Activities.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var cosmosDbSettings = Configuration.GetSection(nameof(CosmosDbSettings)).Get<CosmosDbSettings>();
-
             services
                 .RegisterApi()
                 .RegisterCore()

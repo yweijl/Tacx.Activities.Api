@@ -13,8 +13,10 @@ namespace Tacx.Activities.Api.DependencyConfigurator
         public static IServiceCollection RegisterCore(this IServiceCollection services)
         {
             services.AddScoped<IRequestHandler<CreateActivityCommand, ActivityDto>, CreateActivityCommandHandler>();
-            services.AddScoped<IRequestHandler<GetActivityQuery, ActivityDto?>, GetActivityQueryHandler>();
+            services.AddScoped<IRequestHandler<UpdateActivityCommand, bool>, UpdateActivityCommandHandler>();
             services.AddScoped<IRequestHandler<DeleteActivityCommand, bool>, DeleteActivityCommandHandler>();
+
+            services.AddScoped<IRequestHandler<GetActivityQuery, ActivityDto?>, GetActivityQueryHandler>();
             return services;
         }
     }

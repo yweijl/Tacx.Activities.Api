@@ -5,6 +5,7 @@ using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Entities;
 using Tacx.Activities.Core.Interfaces;
+using Tacx.Activities.Core.Mappers;
 
 namespace Tacx.Activities.Core.CommandHandlers
 {
@@ -19,22 +20,11 @@ namespace Tacx.Activities.Core.CommandHandlers
 
         public async Task<ActivityDto> Handle(CreateActivityCommand request, CancellationToken cancellationToken)
         {
-            var activity = ToEntity(request.Activity);
+            var activity = request.Activity.ToEntity();
 
             await _repository.CreateAsync(activity);
 
             return request.Activity;
         }
-
-        private static Activity ToEntity(ActivityDto dto)
-            => new()
-            {
-                Id = dto.Id,
-                Name = dto.Name,
-                Description = dto.Description,
-                Duration = dto.Duration,
-                Distance = dto.Distance,
-                AvgSpeed = dto.AvgSpeed,
-            };
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.JsonPatch;
 using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Dtos.Extensions;
@@ -49,21 +50,51 @@ namespace Tacx.Activities.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetActivityById(int id)
+        public async Task<IActionResult> GetActivityById(string id)
         {
-            var activity = await _mediator.Send(new GetActivityQuery(id.ToString()));
+            var activity = await _mediator.Send(new GetActivityQuery(id));
             return activity != null
                 ? Ok(activity)
                 : BadRequest("Activity could not be found");
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(int id)
+        public async Task<IActionResult> DeleteActivity(string id)
         {
-            var isDeleted = await _mediator.Send(new DeleteActivityCommand(id.ToString()));
+            var isDeleted = await _mediator.Send(new DeleteActivityCommand(id));
             return isDeleted
                 ? Ok()
                 : BadRequest("Activity not deleted. Something went wrong");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateActivity([FromBody] ActivityDto activity)
+        {
+            var isUpdated = await _mediator.Send(new UpdateActivityCommand(activity));
+
+            return isUpdated
+                ? Ok()
+                : BadRequest("update failed");
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchActivity(string id,
+            [FromBody] JsonPatchDocument<ActivityDto> patchDoc)
+        {
+
+            var activity = await _mediator.Send(new GetActivityQuery(id));
+            if (activity == null)
+            {
+                return BadRequest("Activity not found");
+            }
+
+            patchDoc.ApplyTo(activity, ModelState);
+            
+            var isPatched = await _mediator.Send(new UpdateActivityCommand(activity));
+
+            return isPatched
+                ? Ok()
+                : BadRequest("patch failed");
         }
     }
 }

@@ -1,0 +1,11 @@
+[
+  {
+    "op": "replace",
+    "path": "/description",
+    "value": "Barry"
+  },
+  {
+    "op": "remove",
+    "path": "/distance"
+  }
+]

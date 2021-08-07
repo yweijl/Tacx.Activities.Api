@@ -7,7 +7,8 @@ namespace Tacx.Activities.Api.DependencyConfigurator
     {
         public static IServiceCollection RegisterApi(this IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddNewtonsoftJson();
             services.AddMediatR(typeof(Startup));
             services.AddSwaggerGen();
             return services;

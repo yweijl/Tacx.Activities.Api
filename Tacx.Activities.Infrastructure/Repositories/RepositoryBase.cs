@@ -19,7 +19,7 @@ namespace Tacx.Activities.Infrastructure.Repositories
             return _container.CreateAsync(entity);
         }
 
-        public virtual Task<TEntity?> GetByIdAsync(string id)
+        public Task<TEntity?> GetByIdAsync(string id)
         {
             return _container.ReadItemAsync(id);
         }
@@ -27,6 +27,11 @@ namespace Tacx.Activities.Infrastructure.Repositories
         public Task<bool> DeleteAsync(string id)
         {
             return _container.DeleteAsync(id);
+        }
+
+        public Task<bool> UpsertAsync(TEntity entity)
+        {
+            return _container.UpsertAsync(entity);
         }
     }
 }

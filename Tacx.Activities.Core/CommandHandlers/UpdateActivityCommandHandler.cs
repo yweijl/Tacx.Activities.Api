@@ -5,21 +5,23 @@ using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Entities;
 using Tacx.Activities.Core.Interfaces;
+using Tacx.Activities.Core.Mappers;
+using Tacx.Activities.Core.Queries;
 
 namespace Tacx.Activities.Core.CommandHandlers
 {
-    public class DeleteActivityCommandHandler : IRequestHandler<DeleteActivityCommand, bool>
+    public class UpdateActivityCommandHandler : IRequestHandler<UpdateActivityCommand, bool>
     {
         private readonly IRepository<Activity> _repository;
 
-        public DeleteActivityCommandHandler(IRepository<Activity> repository)
+        public UpdateActivityCommandHandler(IRepository<Activity> repository)
         {
             _repository = repository;
         }
 
-        public Task<bool> Handle(DeleteActivityCommand request, CancellationToken cancellationToken)
+        public Task<bool> Handle(UpdateActivityCommand request, CancellationToken cancellationToken)
         {
-            return _repository.DeleteAsync(request.Id);
+           return _repository.UpsertAsync(request.Activity.ToEntity());
         }
     }
 }
