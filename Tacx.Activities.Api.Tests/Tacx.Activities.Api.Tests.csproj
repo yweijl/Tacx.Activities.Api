@@ -14,4 +14,9 @@
 		<PackageReference Include="coverlet.collector" Version="3.0.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Tacx.Activities.Api\Tacx.Activities.Api.csproj" />
+	  <ProjectReference Include="..\Tacx.Activities.Core\Tacx.Activities.Core.csproj" />
+	</ItemGroup>
+
 </Project>

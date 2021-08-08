@@ -2,12 +2,11 @@
 {
     public static class ActivityDtoExtensions
     {
-        public static bool IsEmpty(this ActivityDto activity)
-            => string.IsNullOrWhiteSpace(activity.Id) &&
-               string.IsNullOrWhiteSpace(activity.Name) &&
-               string.IsNullOrWhiteSpace(activity.Description) &&
-               activity.Distance == 0 &&
-               activity.AvgSpeed == 0 &&
+        public static bool IsInvalid(this ActivityDto activity)
+            => string.IsNullOrWhiteSpace(activity.Id) ||
+               string.IsNullOrWhiteSpace(activity.Name) ||
+               activity.Distance == 0 ||
+               activity.AvgSpeed == 0 ||
                activity.Duration == 0;
     }
 }

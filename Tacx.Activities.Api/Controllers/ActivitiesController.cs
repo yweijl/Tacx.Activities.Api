@@ -31,7 +31,7 @@ namespace Tacx.Activities.Api.Controllers
                 var activity = await JsonSerializer.DeserializeAsync<ActivityDto>(
                     file.OpenReadStream(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                if (activity == null || activity.IsEmpty())
+                if (activity == null || activity.IsInvalid())
                 {
                     return BadRequest("Uploaded Activity is not valid");
                 }
@@ -50,7 +50,7 @@ namespace Tacx.Activities.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetActivityById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
             var activity = await _mediator.Send(new GetActivityQuery(id));
             return activity != null
@@ -59,7 +59,7 @@ namespace Tacx.Activities.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(string id)
+        public async Task<IActionResult> Delete(string id)
         {
             var isDeleted = await _mediator.Send(new DeleteActivityCommand(id));
             return isDeleted
@@ -68,7 +68,7 @@ namespace Tacx.Activities.Api.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateActivity([FromBody] ActivityDto activity)
+        public async Task<IActionResult> Update([FromBody] ActivityDto activity)
         {
             var isUpdated = await _mediator.Send(new UpdateActivityCommand(activity));
 
@@ -78,7 +78,7 @@ namespace Tacx.Activities.Api.Controllers
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchActivity(string id,
+        public async Task<IActionResult> Patch(string id,
             [FromBody] JsonPatchDocument<ActivityDto> patchDoc)
         {
 
