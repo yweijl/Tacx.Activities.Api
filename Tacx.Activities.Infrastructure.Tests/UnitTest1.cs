@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Tacx.Activities.Api.Tests
+namespace Tacx.Activities.Infrastructure.Tests
 {
     public class Tests
     {

@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.JsonPatch;
 using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Dtos.Extensions;
