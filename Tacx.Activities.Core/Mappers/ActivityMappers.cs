@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Tacx.Activities.Core.Dtos;
+﻿using Tacx.Activities.Core.Dtos;
 using Tacx.Activities.Core.Entities;
 
 namespace Tacx.Activities.Core.Mappers
@@ -19,6 +14,9 @@ namespace Tacx.Activities.Core.Mappers
                 Duration = dto.Duration,
                 Distance = dto.Distance,
                 AvgSpeed = dto.AvgSpeed,
+                AvgBpm = dto.AvgBpm,
+                AvgRpm = dto.AvgRpm,
+                AvgWatt = dto.AvgWatt
             };
 
         public static ActivityDto ToDto(this Activity activity)
@@ -30,6 +28,9 @@ namespace Tacx.Activities.Core.Mappers
                 Duration = activity.Duration,
                 Distance = activity.Distance,
                 AvgSpeed = activity.AvgSpeed,
+                AvgBpm = activity.AvgBpm,
+                AvgRpm = activity.AvgRpm,
+                AvgWatt = activity.AvgWatt
             };
     }
 }
