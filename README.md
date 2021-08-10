@@ -3,7 +3,7 @@
 ## Setup CosmosDB
 
 - Download, install and run the [Azure Cosmos Emulator](https://docs.microsoft.com/en-us/azure/cosmos-db/local-emulator?tabs=cli%2Cssl-netstd21)
-- Open the [local data explorer](https://localhost:8081/_explorer/index.html) and copy the `Primary Connection String` use this as the ConnectionString as the value for the connectionString in the Setup Secrets step
+- Open the [local data explorer](https://localhost:8081/_explorer/index.html) and copy the `Primary Key` use this as the value for the cosmosDb primary key in the Setup Secrets step
 
 ## Setup Azure Storage Queue
 
