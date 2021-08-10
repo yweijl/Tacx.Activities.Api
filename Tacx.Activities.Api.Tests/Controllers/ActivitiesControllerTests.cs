@@ -1,13 +1,12 @@
-using System.IO;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using System.IO;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Tacx.Activities.Api.Controllers;
 using Tacx.Activities.Core.Commands;
 using Tacx.Activities.Core.Dtos;
@@ -24,7 +23,6 @@ namespace Tacx.Activities.Api.Tests.Controllers
             var mediator = new Mock<IMediator>();
             var data = JsonSerializer.SerializeToUtf8Bytes(mediator);
             await using var stream = new MemoryStream(data);
-
 
             var sut = new ActivitiesController(mediator.Object);
 

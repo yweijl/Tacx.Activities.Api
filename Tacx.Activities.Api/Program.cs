@@ -1,8 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
+using Tacx.Activities.Infrastructure.AzureStorage.Interfaces;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 
 namespace Tacx.Activities.Api
@@ -13,7 +13,14 @@ namespace Tacx.Activities.Api
         {
             var host = CreateHostBuilder(args).Build();
             await EnsureDbCreatedAsync(host);
+            await EnsureBlobContainersCreatedAsync(host);
             await host.RunAsync();
+        }
+
+        private static async Task EnsureBlobContainersCreatedAsync(IHost host)
+        {
+            var blobStorageClient = host.Services.GetService<IBlobStorageClient>();
+            await blobStorageClient!.CreateIfNotExistsAsync();
         }
 
         private static async Task EnsureDbCreatedAsync(IHost host)

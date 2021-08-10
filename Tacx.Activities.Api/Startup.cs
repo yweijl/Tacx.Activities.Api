@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tacx.Activities.Api.DependencyConfigurator;
+using Tacx.Activities.Infrastructure.AzureStorage;
 using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 
 namespace Tacx.Activities.Api
@@ -21,10 +22,11 @@ namespace Tacx.Activities.Api
         public void ConfigureServices(IServiceCollection services)
         {
             var cosmosDbSettings = Configuration.GetSection(nameof(CosmosDbSettings)).Get<CosmosDbSettings>();
+            var azureStorageSettings = Configuration.GetSection(nameof(AzureStorageSettings)).Get<AzureStorageSettings>();
             services
                 .RegisterApi()
                 .RegisterCore()
-                .RegisterInfrastructure(cosmosDbSettings);
+                .RegisterInfrastructure(cosmosDbSettings, azureStorageSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

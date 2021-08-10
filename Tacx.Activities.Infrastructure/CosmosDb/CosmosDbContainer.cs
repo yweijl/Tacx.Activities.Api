@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Azure.Cosmos;
+using System;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Azure.Cosmos;
 using Tacx.Activities.Core.Entities;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 

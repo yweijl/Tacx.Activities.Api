@@ -1,22 +1,31 @@
 ﻿using System.Threading.Tasks;
 using Tacx.Activities.Core.Entities;
-using Tacx.Activities.Core.Interfaces;
+using Tacx.Activities.Infrastructure.AzureStorage.Interfaces;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 
 namespace Tacx.Activities.Infrastructure.Repositories
 {
     public class ActivitiesRepository : RepositoryBase<Activity>
     {
-        private readonly IStorageService _storageService;
-        public ActivitiesRepository(ICosmosDbContainer<Activity> container, IStorageService storageService) : base(container)
+        private readonly IBlobContainer _blobContainer;
+
+        public ActivitiesRepository(ICosmosDbContainer<Activity> container, IBlobContainer blobContainer) : base(container)
         {
-            _storageService = storageService;
+            _blobContainer = blobContainer;
         }
 
         public override async Task<bool> CreateAsync(Activity activity)
         {
-            //await _storageService.PersistActivityAsync(activity);
-            return await base.CreateAsync(activity);
+            var created = await base.CreateAsync(activity);
+            
+            if (created)
+            {
+                //var data = JsonSerializer.SerializeToUtf8Bytes(activity);
+                //await using var stream = new MemoryStream(data);
+                await _blobContainer.AddAsync(activity.Id, activity);
+            }
+
+            return created;
         }
     }
 }
