@@ -7,7 +7,7 @@ namespace Tacx.Activities.Infrastructure.AzureStorage.Interfaces
     {
         public Task<TEntity?> GetAsync<TEntity>(string id) where TEntity : EntityBase, new();
 
-        Task<bool> AddAsync<TEntity>(string id, TEntity content) where TEntity : EntityBase, new();
+        Task<bool> AddAsync<TEntity>(TEntity content) where TEntity : EntityBase, new();
         Task<bool> DeleteAsync<TEntity>(string id) where TEntity : EntityBase, new();
     }
 }

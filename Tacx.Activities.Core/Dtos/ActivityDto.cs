@@ -8,7 +8,7 @@ namespace Tacx.Activities.Core.Dtos
         public string Name { get; set; } = default!;
         public string? Description { get; set; }
         public double Distance { get; set; }
-        public double Duration { get; set; }
+        public int Duration { get; set; }
         public double AvgSpeed { get; set; }
 
         public bool Equals(ActivityDto? other)

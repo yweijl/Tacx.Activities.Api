@@ -31,12 +31,12 @@ namespace Tacx.Activities.Infrastructure.AzureStorage
             }
         }
 
-        public async Task<bool> AddAsync<TEntity>(string id, TEntity entity) where TEntity : EntityBase, new()
+        public async Task<bool> AddAsync<TEntity>(TEntity entity) where TEntity : EntityBase, new()
         {
             try
             {
                 await using var content = entity.EntityToStream();
-                await _client.GetBlobContainer<TEntity>().UploadBlobAsync(id, content);
+                await _client.GetBlobContainer<TEntity>().UploadBlobAsync(entity.Id, content);
                 return true;
             }
             catch (Exception e)

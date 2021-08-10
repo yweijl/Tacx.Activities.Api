@@ -9,12 +9,13 @@ using Tacx.Activities.Infrastructure.CosmosDb;
 using Tacx.Activities.Infrastructure.CosmosDb.ConfigModels;
 using Tacx.Activities.Infrastructure.CosmosDb.Interfaces;
 using Tacx.Activities.Infrastructure.Repositories;
+using Tacx.Activities.Infrastructure.Strava;
 
 namespace Tacx.Activities.Api.DependencyConfigurator
 {
     public static class ConfigureInfrastructure
     {
-        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, CosmosDbSettings cosmosDbSettings, AzureStorageSettings azureStorageSettings)
+        public static IServiceCollection RegisterInfrastructure(this IServiceCollection services, CosmosDbSettings cosmosDbSettings, AzureStorageSettings azureStorageSettings, StravaApiSettings stravaApiSettings)
         {
             services.AddScoped<IRepository<Activity>, ActivitiesRepository>();
 
@@ -27,6 +28,9 @@ namespace Tacx.Activities.Api.DependencyConfigurator
             services.AddSingleton(cosmosDbClient);
 
             services.AddScoped<ICosmosDbContainer<Activity>, CosmosDbContainer<Activity>>();
+
+            IStravaApi api = new StravaApi(stravaApiSettings);
+            services.AddSingleton(api);
 
             return services;
         }

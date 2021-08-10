@@ -3,6 +3,6 @@
   "name": "Cycling",
   "description": "put the pedal to the metal",
   "distance": 80.0,
-  "duration": 300.0,
+  "duration": 30000,
   "avgSpeed": 39.0
 }
